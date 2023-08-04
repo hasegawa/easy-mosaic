@@ -5,3 +5,5 @@ services:
       dockerfile: Dockerfile
     container_name: mosaic_python
     tty: true
+    volumes:
+      - "./python/src:/usr/src/app"
