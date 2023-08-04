@@ -1,0 +1,7 @@
+services:
+  python:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: mosaic_python
+    tty: true
