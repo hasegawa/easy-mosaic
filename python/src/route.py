@@ -11,7 +11,7 @@ class filterParametars(BaseModel):
     width: int
     height: int
 
-@app.post("/v1/filter/mosaic")
+@app.post("/api/v1/filter/mosaic")
 async def mosaic_fileter(param: filterParametars):
     image_ndarray = base64_to_ndarray(param.base64_str)
     modified_image = mosaic_image(image_ndarray, param.start_x_position ,param.start_y_position ,param.width,param.height)
