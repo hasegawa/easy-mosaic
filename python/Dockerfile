@@ -6,4 +6,4 @@ RUN apt-get upgrade -y
 RUN apt-get install -y libgl1-mesa-dev
 RUN pip install opencv-python fastapi uvicorn[standard]
 
-RUN uvicorn route:app --host 0.0.0.0 --reload --port 8000
+CMD ["uvicorn", "route:app", "--host", "0.0.0.0", "--reload", "--port", "8000"]
