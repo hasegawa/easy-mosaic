@@ -16,7 +16,7 @@ def mosaic_image(origin_image: numpy.ndarray, x:int, y:int, width:int, height:in
 
 # Base64からndarrayへ変換する関数
 def base64_to_ndarray(base64_str:str) -> numpy.ndarray:
-    return cv2.imdecode(numpy.fromstring(base64.b64decode(base64_str), numpy.uint8), cv2.IMREAD_UNCHANGED)
+    return cv2.imdecode(numpy.frombuffer(base64.b64decode(base64_str), numpy.uint8), cv2.IMREAD_UNCHANGED)
 
 # ndarrayからBase64へ変換する関数
 def ndarray_to_base64(image:numpy.ndarray) -> str:
