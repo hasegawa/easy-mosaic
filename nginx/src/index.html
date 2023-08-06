@@ -1,1 +1,61 @@
-hello...
+<html>
+    <head>
+        <title>easy-mosaic</title>
+    </head>
+    <body>
+        <input type="file" id="inputFile">
+        <canvas id="canvas"></canvas>
+    </body>
+
+    <script>
+        var image; // 画像イメージ
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var rectanglePosition = {x1: 0,y1: 0,x2: 0, y2: 0}; // canvas上に描画する選択範囲の座標
+
+        // ファイルアップロードとcanvas描画に関係する箇所
+        document.getElementById("inputFile").addEventListener("change", function (e) {
+            var file = e.target.files;
+            var reader = new FileReader();
+            reader.readAsDataURL(file[0])
+            reader.onload = function () {
+            image = new Image();
+            image.src = reader.result;
+            image.onload = () => {
+                canvas.width = image.width;
+                canvas.height = image.height;
+                context.drawImage(image,0,0);
+                }
+            }
+        });
+        // マウス押下時
+        function mouseDown(event) {
+            var canvasElementPotision = event.target.getBoundingClientRect();
+            // canvas要素のページ内での座標を補正
+            rectanglePosition.x1 = event.clientX - canvasElementPotision.x;
+            rectanglePosition.y1 = event.clientY - canvasElementPotision.y;
+            canvas.addEventListener("mousemove", mouseMove);
+        }
+        canvas.addEventListener("mousedown", mouseDown);
+        // マウス押下&移動時
+        function mouseMove(event) {
+            // 画像ファイルを再描画してその上に選択範囲を描画
+            context.drawImage(image, 0,0);
+            var canvasElementPotision = event.target.getBoundingClientRect();
+            // 移動時も同様にcanbas要素のページ内での座標を補正
+            rectanglePosition.x2 = event.layerX - rectanglePosition.x1 - canvasElementPotision.x;
+            rectanglePosition.y2 = event.layerY - rectanglePosition.y1 - canvasElementPotision.y;
+            context.lineWidth = 3;
+            context.strokeStyle =  "rgb(181, 255, 20)";
+            context.strokeRect(rectanglePosition.x1, rectanglePosition.y1, rectanglePosition.x2, rectanglePosition.y2);
+        }
+        // マウス押下終了時
+        function mouseUp(event) {
+            // 元の画像ファイルを再描画してマウス移動時に描画していた選択範囲を消去
+            context.drawImage(image, 0, 0);
+            rectanglePosition = {x1: 0, y1: 0, x2: 0, y2: 0};
+            canvas.removeEventListener("mousemove", mouseMove);
+        }
+        canvas.addEventListener("mouseup", mouseUp);
+</script>
+</html>
