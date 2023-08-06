@@ -2,6 +2,7 @@ var image; // 画像イメージ
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 var rectanglePosition = {x1: 0,y1: 0,x2: 0, y2: 0}; // canvas上に描画する選択範囲の座標
+var downloadLink = document.getElementById('download')
 
 // ファイルアップロードとcanvas描画に関係する箇所
 document.getElementById("inputFile").addEventListener("change", function (e) {
@@ -87,6 +88,6 @@ function postFilter() {
         body: JSON.stringify(data),
     })
     .then((response) => response.json())
-    .then((data) => {image.src = 'data:image/png;base64,' + data.image_base64})
+    .then((data) => {image.src = 'data:image/png;base64,' + data.image_base64;downloadLink.href=image.src})
     .catch((error) => {console.log(error)})
 }
