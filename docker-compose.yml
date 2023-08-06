@@ -1,0 +1,22 @@
+services:
+  api:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: api_server
+    tty: true
+    volumes:
+      - "./python/src:/usr/src/app"
+  web:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: web_server
+    tty: true
+    depends_on:
+      - api
+    ports:
+      - "8000:80"
+    volumes:
+      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./nginx/src:/home/src"
