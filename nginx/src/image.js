@@ -5,8 +5,8 @@ var rectanglePosition = {x1: 0,y1: 0,x2: 0, y2: 0}; // canvas上に描画する�
 var downloadLink = document.getElementById('download')
 
 // ファイルアップロードとcanvas描画に関係する箇所
-document.getElementById("inputFile").addEventListener("change", function (e) {
-    var file = e.target.files;
+document.getElementById("inputFile").addEventListener("change", function (event) {
+    var file = event.target.files;
     var reader = new FileReader();
     reader.readAsDataURL(file[0])
     reader.onload = function () {
