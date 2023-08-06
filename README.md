@@ -5,12 +5,13 @@ easy-mosaicはアップロードした画像の選択した範囲にモザイク
 
 # 構成
 - WebとAPIサーバーをdocker-composeで作成しています
-- APIとの通信はAjax
+- Webサーバーにnginx。APIサーバーにuvicorn + FastAPIを使っています。
+- Base64文字列で画像のやりとりを行っています
 - 画像処理にOpenCVを使っています
 
 # 動かし方
 下記コマンドでコンテナを立ち上げて、`http://localhost:8000/` へアクセスしてください。  
-動作確認用サンプル画像として `sample.png` をご利用いただいてもよいです。
+
 ```
 $ docker-compose up -d
 ```
